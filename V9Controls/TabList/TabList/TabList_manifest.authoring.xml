@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<authoring-manifest schema-version="1.0">
+    <group>
+        <section>
+            <property name="Items" />
+          </section>
+        <section>
+            <property name="RenderSize" complex-type="RenderSize" />
+            <property name="IsVertical" complex-type="IsVertical" />
+            <property name="DisplayMode" complex-type="DisplayMode" />
+            <property name="ImageDisplayed" />
+            <property name="ShowControls" />
+            <property-group name="Color">
+                <property name="FontColor" complex-type="FontColor" helper-ui="color" />
+            </property-group>
+        </section>
+    </group>
+</authoring-manifest>
