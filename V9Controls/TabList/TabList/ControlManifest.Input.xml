@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest>
   <control namespace="PowerCAT" constructor="TabList" version="0.0.1" display-name-key="TabList" description-key="TabList_Desc" control-type="virtual" authoring-manifest="TabList_manifest.authoring.xml">
-    <data-set name="Items" display-name-key="RadioGroup_Items_Display_Key" description-key="RadioGroup_Items_Desc_Key" allow-default-selected-items="true" resettable="true" />
+    <!--<data-set name="Items" display-name-key="RadioGroup_Items_Display_Key" description-key="RadioGroup_Items_Desc_Key" allow-default-selected-items="true" resettable="true" />-->
     <!-- OnChange Event Properties -->
     <property name="SelectedKey" display-name-key="SelectedKey" usage="bound" of-type="SingleLine.Text" />
 
@@ -13,17 +13,16 @@
     <property name="IsVertical" display-name-key="IsVertical" of-type="TwoOptions" usage="input" default-value="false" required="false" />
     <property name="AccessibilityLabel" display-name-key="AccessibilityLabel" of-type="SingleLine.Text" usage="input" required="false" />
     <property name="ThemeColor" display-name-key="ThemeColor" of-type="SingleLine.Text" usage="input" required="false" />
-    <property name="FontColor" display-name-key="FontColor" of-type="SingleLine.Text" usage="input" required="false" />
+    <property name="FontColor" display-name-key="Color_Property_Name" description-key="Color_Property_Description" of-type="SingleLine.Text" usage="input" default-value="#FFF" required="false"/>
+    <property name="FillColor" display-name-key="Fill_Property_Name" description-key="Fill_Property_Description" of-type="SingleLine.Text" usage="input" default-value="#3D5FAE" required="false"/>
     <!-- Dataset Property -->
-    <!-- <data-set name="items" display-name-key="Items">
+    <data-set name="items" display-name-key="Items">
       <property-set name="ItemDisplayName" display-name-key="Display Name" of-type="SingleLine.Text" usage="bound" required="true" />
       <property-set name="ItemKey" display-name-key="Key" of-type="SingleLine.Text" usage="bound" required="true" />
-      <property-set name="ItemEnabled" display-name-key="Enabled" of-type="TwoOptions" usage="bound" required="false" />
-      <property-set name="ItemVisible" display-name-key="Visible" of-type="TwoOptions" usage="bound" required="false" />
       <property-set name="ItemChecked" display-name-key="ItemChecked" of-type="TwoOptions" usage="bound" required="false" />
       <property-set name="ItemIconName" display-name-key="IconName" of-type="SingleLine.Text" usage="bound" required="false" />
       <property-set name="ItemCount" display-name-key="ItemCount" of-type="Whole.None" usage="bound" required="false" />
-    </data-set> -->
+    </data-set> 
    
     <resources>
       <code path="index.ts" order="1" />

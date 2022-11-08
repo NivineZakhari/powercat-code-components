@@ -34,7 +34,7 @@ export class TabList implements ComponentFramework.ReactControl<IInputs, IOutput
      * @returns ReactElement root react element for the control
      */
     public updateView(context: ComponentFramework.Context<IInputs>): React.ReactElement {
-        const dataset = context.parameters.Items;
+        const dataset = context.parameters.items;
         const datasetChanged = context.updatedProperties.indexOf(ManifestPropertyNames.dataset) > -1 || !this.items;
 
         if (datasetChanged) {
@@ -105,7 +105,7 @@ export class TabList implements ComponentFramework.ReactControl<IInputs, IOutput
         }
         if (item && item.data) {
             this.onSelectCalled = true;
-            this.context.parameters.Items.openDatasetItem(item.data.getNamedReference());
+            this.context.parameters.items.openDatasetItem(item.data.getNamedReference());
         }
     };
 }

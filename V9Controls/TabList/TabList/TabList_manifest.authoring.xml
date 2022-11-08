@@ -12,6 +12,7 @@
             <property name="ShowControls" />
             <property-group name="Color">
                 <property name="FontColor" complex-type="FontColor" helper-ui="color" />
+                <property name="FillColor" complex-type="FillColor" helper-ui="color" />
             </property-group>
         </section>
     </group>

@@ -149,4 +149,10 @@
     <data name="ThemeType" xml:space="preserve">
         <value>Theme Type</value>
     </data>
+    <data name="FontColor" xml:space="preserve">
+        <value>Font Color</value>
+    </data>
+    <data name="FillColor" xml:space="preserve">
+        <value>Fill Color</value>
+    </data>
 </root>
