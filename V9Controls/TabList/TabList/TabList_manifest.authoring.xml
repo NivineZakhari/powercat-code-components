@@ -2,7 +2,7 @@
 <authoring-manifest schema-version="1.0">
     <group>
         <section>
-            <property name="Items" />
+            <property name="items" />
           </section>
         <section>
             <property name="RenderSize" complex-type="RenderSize" />
