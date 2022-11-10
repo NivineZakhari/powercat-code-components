@@ -1,73 +1,90 @@
-import * as React from 'react';
+/**
+ * @license Copyright (c) Microsoft Corporation. All rights reserved.
+ */
+
 import { IInputs, IOutputs } from './generated/ManifestTypes';
-import { SearchBoxComponent } from './components/SearchBox';
-import { ISearchBoxComponentProps } from './components/Component.types';
-import { InputEvents } from './ManifestConstants';
-export class SearchBox implements ComponentFramework.ReactControl<IInputs, IOutputs> {
-    context: ComponentFramework.Context<IInputs>;
-    notifyOutputChanged: () => void;
-    searchTextValue: string | null;
-    setFocus = '';
+import { SpinButtonComponent } from './components/SpinButton';
+import { ISpinButtonComponentProps } from './components/Component.types';
+import * as React from 'react';
+
+export class SpinButton implements ComponentFramework.ReactControl<IInputs, IOutputs> {
+    private theComponent: ComponentFramework.ReactControl<IInputs, IOutputs>;
+    private notifyOutputChanged: () => void;
+    private spinButtonValue: string | null;
+    
+    /** Framework-provided context */
+	private _context: ComponentFramework.ReactControl<IInputs, IOutputs>;
+    /** Current value of input */
+	private _trackedValue: string;
+	/** Framework-provided raw value */
+	private _raw: string;
+
+    /**
+     * Empty constructor.
+     */
+    constructor() { }
 
     /**
      * Used to initialize the control instance. Controls can kick off remote server calls and other initialization actions here.
      * Data-set values are not initialized here, use updateView.
      * @param context The entire property bag available to control via Context Object; It contains values as set up by the customizer mapped to property names defined in the manifest, as well as utility functions.
+     * @param notifyOutputChanged A callback method to alert the framework that the control has new outputs ready to be retrieved asynchronously.
      * @param state A piece of data that persists in one session for a single user. Can be set at any point in a controls life cycle by calling 'setControlState' in the Mode interface.
-     * @param container If a control is marked control-type='standard', it will receive an empty div element within which it can render its content.
      */
-    public init(context: ComponentFramework.Context<IInputs>, notifyOutputChanged: () => void): void {
-        this.context = context;
-        this.context.mode.trackContainerResize(true);
+    public init(
+        context: ComponentFramework.Context<IInputs>,
+        notifyOutputChanged: () => void
+    ): void {
         this.notifyOutputChanged = notifyOutputChanged;
     }
 
     /**
      * Called when any value in the property bag has changed. This includes field values, data-sets, global values such as container height and width, offline status, control metadata values such as label, visible, etc.
      * @param context The entire property bag available to control via Context Object; It contains values as set up by the customizer mapped to names defined in the manifest, as well as utility functions
+     * @returns ReactElement root react element for the control
      */
     public updateView(context: ComponentFramework.Context<IInputs>): React.ReactElement {
         const allocatedWidth = parseInt(context.mode.allocatedWidth as unknown as string);
         const allocatedHeight = parseInt(context.mode.allocatedHeight as unknown as string);
-        const eventChanged = inputEvent && this.setFocus !== inputEvent;
+        const stepValue = context.parameters.Step.raw ?? 1;
 
-        if (eventChanged && inputEvent.startsWith(InputEvents.SetFocus)) {
-            this.setFocus = inputEvent;
-        }
-
-        const props: ISearchBoxComponentProps = {
-            onChanged: this.onChange,
-            themeJSON: context.parameters.Theme.raw ?? '',
-            ariaLabel: context.parameters?.AccessibilityLabel.raw ?? '',
-            underLined: context.parameters.Underlined.raw ?? false,
+        const props: ISpinButtonComponentProps = { 
+            label: context.parameters.Label.raw ?? '',
             iconName: context.parameters.IconName.raw ?? '',
-            placeholderText: context.parameters.PlaceHolderText.raw ?? '',
+            defaultValue: context.parameters.Default.raw ?? '0',
+            min: context.parameters.Min.raw ?? 0,
+            max: context.parameters.Max.raw ?? 100,
+            step: stepValue,
+            incrementButtonAriaLabel: 'Increase value by ' + stepValue,
+            decrementButtonAriaLabel: 'Decrease value by ' + stepValue,
+            themeJSON: context.parameters.Theme.raw ?? '',
             disabled: context.mode.isControlDisabled,
-            disableAnimation: context.parameters.DisableAnimation.raw ?? false,
             width: allocatedWidth,
             height: allocatedHeight,
-            setFocus: this.setFocus,
+            onChanged: this.onChange,
         };
 
-        return React.createElement(SearchBoxComponent, props);
+        return React.createElement(SpinButtonComponent, props);
     }
-
+    
     /**
-     * Called when a change is detected from the control. Updates the searchTextValue variable that is assigned to the output SearchText.
+     * Called when a change is detected from the control. 
+     * Updates the output value passed to Power Apps.
      * @param newValue a string returned as the input search text
      */
-    private onChange = (newValue: string | undefined): void => {
-        this.searchTextValue = newValue ?? null;
+     private onChange = (newValue: string | undefined): void => {
+        this.spinButtonValue = newValue ?? null;
         this.notifyOutputChanged();
     };
+
 
     /**
      * It is called by the framework prior to a control receiving new data.
      * @returns an object based on nomenclature defined in manifest, expecting object[s] for property marked as “bound” or “output”
      */
     public getOutputs(): IOutputs {
-        return {
-            SearchText: this.searchTextValue,
+        return { 
+            Value: this.spinButtonValue,
         } as IOutputs;
     }
 
