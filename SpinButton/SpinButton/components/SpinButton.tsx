@@ -6,10 +6,6 @@ import * as React from 'react';
 import { SpinButton, ThemeProvider, createTheme, IPartialTheme, IIconProps, mergeStyles } from '@fluentui/react/lib'
 import { ISpinButtonComponentProps } from './Component.types';
 
-export interface IHelloWorldProps {
-  name?: string;
-}
-
 export const SpinButtonComponent = React.memo((props: ISpinButtonComponentProps) => {
   const { themeJSON, onChanged } = props;
   const icon: IIconProps = { iconName: props.iconName };
